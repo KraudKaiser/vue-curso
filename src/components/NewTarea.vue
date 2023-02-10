@@ -17,6 +17,7 @@ export default {
 		agregarTarea(){
 			if(this.tarea.length > 0){
 				this.$emit("addTarea", this.tarea)
+				this.tarea = ""
 			}else{
 				alert("La Tarea no puede estar vacia")
 			}

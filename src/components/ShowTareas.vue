@@ -2,18 +2,28 @@
 	<div>
 		<h2>Gestion de tareas</h2>
 		<new-tarea @addTarea="addTarea" />
-		<tareas-list :tareas="tareas" @deleteTarea="deleteTarea" @editedTarea="editTarea"/>
+		<br>
+		<tareas-filter v-model="filtro" ></tareas-filter>
+		<tareas-list :tareas="getFiltredTareas" @deleteTarea="deleteTarea" @editedTarea="editTarea"/>
   </div>
 </template>
 
 <script>
 import NewTarea from './NewTarea.vue';
 import TareasList from './TareasList.vue';
+import TareasFilter from './TareasFilter.vue';
 export default {
-	components:{NewTarea, TareasList},
+	components:{NewTarea, TareasList, TareasFilter},
+	computed:{
+		getFiltredTareas(){
+			let reg = new RegExp(this.filtro, )
+			return this.tareas.filter(tarea => reg.test(tarea))
+		}
+	},
 	data(){
 		return{
-			tareas:["Aprender Vue", "Aprender Vuex", "Aprender Vuetify"]
+			tareas:["Aprender Vue", "Aprender Vuex", "Aprender Vuetify"],
+			filtro:""
 		}
 	},
 	methods:{

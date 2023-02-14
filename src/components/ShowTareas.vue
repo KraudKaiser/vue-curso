@@ -5,7 +5,10 @@
 		<new-tarea @addTarea="addTarea" />
 		<br>
 		<tareas-filter v-model="filtro" ></tareas-filter>
-		<tareas-list :tareas="getFiltredTareas" @deleteTarea="deleteTarea" @editedTarea="editTarea"/>
+
+		<div v-if="cargando" class="cargando"><br><br>Cargando...</div>
+		<tareas-list v-else :tareas="getFiltredTareas" @deleteTarea="deleteTarea" @editedTarea="editTarea"/>
+		<tareas-notification :notificar="notificar" />
   </div>
 </template>
 
@@ -13,8 +16,16 @@
 import NewTarea from './NewTarea.vue';
 import TareasList from './TareasList.vue';
 import TareasFilter from './TareasFilter.vue';
+import TareasNotification from './TareasNotification.vue';
 export default {
-	components:{NewTarea, TareasList, TareasFilter},
+	components:{NewTarea, TareasList, TareasFilter, TareasNotification},
+	mounted(){
+		this.cargando = true
+		setTimeout(()=>{
+			this.tareas = ["Aprender Vue", "Aprender Vuex", "Aprender Vuetify"]
+			this.cargando = false
+		}, 1500)
+	},
 	computed:{
 		getFiltredTareas(){
 			let reg = new RegExp(this.filtro, )
@@ -34,19 +45,27 @@ export default {
 		return{
 			tareas:["Aprender Vue", "Aprender Vuex", "Aprender Vuetify"],
 			filtro:"",
-			eliminated: 0
+			eliminated: 0,
+			notificar: null,
+			cargando: false
 		}
 	},
 	methods:{
+		setNotification(val){
+			this.notificar = val
+		},
 		addTarea(tarea){
 			this.tareas.push(tarea)
+			this.setNotification("agregar")
 		},
 		deleteTarea(index){
 			this.tareas.splice(index, 1)
 			this.eliminated ++ 
+			this.setNotification("eliminar")
 		},
 		editTarea(index, texto){
 			this.$set(this.tareas,index,texto)
+			this.setNotification("editar")
 		}
 	}
 }

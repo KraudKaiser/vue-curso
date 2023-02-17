@@ -6,19 +6,20 @@
 </template>
 
 <script>
+import {mapMutations} from "vuex"
 export default {
-	props:{
-		value: String
-	},
 	computed:{
 		filtro:{
 			get(){
 				return this.value
 			},
 			set(val){
-				this.$emit("input",val)
+				this.setFilter(val)
 			}
 		}
+	},
+	methods:{
+		...mapMutations(["setFilter"])
 	}
 }
 </script>

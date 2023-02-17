@@ -1,12 +1,13 @@
 <template>
   <div>
 	<label for="tareaInput">Nueva Tarea: </label>
-	<input type="text" v-model="tarea" name="tareaInput">
-	<button @click="agregarTarea">Agregar Tarea</button>
+	<input type="text" v-model="tarea" name="tareaInput" @keyup.enter="newTarea">
+	<button @click="newTarea">Agregar Tarea</button>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
 	data(){
 		return{
@@ -14,9 +15,10 @@ export default {
 		}
 	},
 	methods:{
-		agregarTarea(){
+		...mapMutations(["agregarTarea"]),
+		newTarea(){
 			if(this.tarea.length > 0){
-				this.$emit("addTarea", this.tarea)
+				this.agregarTarea(this.tarea)
 				this.tarea = ""
 			}else{
 				alert("La Tarea no puede estar vacia")

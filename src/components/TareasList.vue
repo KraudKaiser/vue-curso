@@ -1,6 +1,6 @@
 <template>
   <ul>
-	<li v-for="(tarea, index) in tareas" :key="index">
+	<li v-for="(tarea, index) in getFiltredTareas" :key="index">
 		{{ tarea }}
 		
 	<template v-if="editando === index">
@@ -16,7 +16,11 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex"
 export default {
+	computed:{
+		...mapGetters(["getFiltredTareas"])
+	},
 	data(){
 		return{
 			editando:null,

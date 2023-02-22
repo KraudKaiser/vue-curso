@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex"
+import {mapGetters, mapMutations} from "vuex"
 export default {
 	computed:{
 		...mapGetters(["getFiltredTareas"])
@@ -28,15 +28,16 @@ export default {
 		}
 	},
 	methods:{
+		...mapMutations(["eliminarTarea", "editarTarea"]),
 		deleteTarea(index){
-			this.$emit("deleteTarea", index)
+			this.eliminarTarea(index)
 		},
 		editTarea(index, tarea){
 			this.editando = index
 			this.texto = tarea
 		},
 		emitTarea(){
-			this.$emit("editedTarea", this.editando, this.texto)
+			this.editarTarea({index:this.editando, tarea:this.texto})
 			this.editando = null
 			this.texto = ""
 		}

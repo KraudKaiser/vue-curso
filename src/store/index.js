@@ -8,7 +8,8 @@ export default new Vuex.Store({
 	tareas:[],
 	filtro:"",
 	cargando: false,
-	notificar:null
+	notificar:null,
+	eliminated:0
   },
   getters: {
 	getFiltredTareas(state){
@@ -23,6 +24,15 @@ export default new Vuex.Store({
 	agregarTarea(state, tarea){
 		state.tareas.push(tarea)
 		state.notificar = "agregar"
+	},
+	eliminarTarea(state, index){
+		state.tareas.splice(index, 1)
+		state.notificar = "eliminar"
+		state.eliminated++
+	},
+	editarTarea(state,{index, tarea}){
+		Vue.set(state.tareas, index, tarea)
+		state.notificar = "editar"
 	},
 	setFilter(state, value){
 		state.filtro = value

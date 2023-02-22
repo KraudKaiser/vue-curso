@@ -7,7 +7,7 @@
 		<tareas-filter></tareas-filter>
 
 		<div v-if="cargando" class="cargando"><br><br>Cargando...</div>
-		<tareas-list v-else  @deleteTarea="deleteTarea" @editedTarea="editTarea"/>
+		<tareas-list v-else />
 		<tareas-notification :notificar="notificar" />
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
 		this.cargarTareas()
 	},
 	computed:{
-		...mapState(["cargando", "tareas", "notificar"]),
+		...mapState(["cargando", "tareas", "notificar", "eliminated"]),
 		getCurrentTareas() {
 			return this.tareas.length
 		},
@@ -35,23 +35,10 @@ export default {
 			return this.tareas.length + this.eliminated
 		}
 	},
-	data(){
-		return{
-			eliminated: 0
-		}
-	},
 	methods:{
-		...mapActions(["cargarTareas"]),
-		addTarea(tarea){
-			this.tareas.push(tarea)
-		},
-		deleteTarea(index){
-			this.tareas.splice(index, 1)
-			this.eliminated ++ 
-		},
-		editTarea(index, texto){
-			this.$set(this.tareas,index,texto)
-		}
+		...mapActions(["cargarTareas"])
+
+		
 	}
 }
 </script>

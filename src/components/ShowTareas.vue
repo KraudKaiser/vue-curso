@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<v-container class="grey lighten -3">
 		<h2>Gestion de tareas</h2>
 		<span>Vigentes: {{ getCurrentTareas }}</span> <span>Eliminadas: {{ getEliminatedTareas }}</span> <span>Totales: {{ getTotalTareas }} </span>
 		<new-tarea />
@@ -9,7 +9,7 @@
 		<div v-if="cargando" class="cargando"><br><br>Cargando...</div>
 		<tareas-list v-else />
 		<tareas-notification :notificar="notificar" />
-  </div>
+	</v-container>
 </template>
 
 <script>
